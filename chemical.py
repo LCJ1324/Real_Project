@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import koreanize_matplotlib
 import matplotlib.pyplot as plt
 from PIL import Image
 
