@@ -48,41 +48,6 @@ st.session_state["battery_id"] = battery_id
 
 max_cycle = vol_df[vol_df['Battery'] == battery_id]['Cycle'].max()
 
-if "slider_cycle" not in st.session_state:
-    st.session_state["slider_cycle"] = 1
-if "num_input_cycle" not in st.session_state:
-    st.session_state["num_input_cycle"] = 1
-
-def update_number_input():
-    st.session_state["num_input_cycle"] = st.session_state["slider_cycle"]
-
-def update_slider():
-    st.session_state["slider_cycle"] = st.session_state["num_input_cycle"]
-
-with st.sidebar:
-    col1, col2 = st.columns([2, 1])
-
-    with col1:
-        st.slider(
-            "# **Cycle**", 
-            min_value=1, 
-            max_value=max_cycle, 
-            key="slider_cycle",
-            on_change=update_number_input
-        )
-
-    with col2:
-        st.number_input(
-            " ",
-            min_value=1, 
-            max_value=max_cycle, 
-            step=1,
-            key="num_input_cycle",
-            on_change=update_slider
-        )
-
-cycle = st.session_state["slider_cycle"]
-
 st.title(f'전기화학적 특성 분석 - Battery {battery_id}')
 st.text(' ')
 idx = battery_list.index(battery_id)
@@ -99,7 +64,18 @@ col444.metric("Discharge Current (A)", f"{filtered_df['Discharge_Current'].iloc[
 col1, col2 = st.columns(2, border=True)
 
 with col1 :
-    st.markdown('### **Galvanostatic Charge/Discharge (GCD)**')
+    col1_1, col1_2 = st.columns([3, 1])
+    with col1_1:
+        st.markdown('### **Galvanostatic Charge/Discharge (GCD)**')
+
+    with col1_2 :
+        cycle = st.number_input(
+            f"Cycle (Max Cycle : {max_cycle})",
+            min_value=1, 
+            max_value=max_cycle, 
+            step=1,
+        )
+    
     df_charge = vol_df[(vol_df['Cycle'] == cycle) & (vol_df['type'] == 'charge') & (vol_df['Battery'] == battery_id)]
     df_discharge = vol_df[(vol_df['Cycle'] == cycle) & (vol_df['type'] == 'discharge') & (vol_df['Battery'] == battery_id)]
     fig, ax = plt.subplots(figsize = (8, 5))
@@ -110,7 +86,6 @@ with col1 :
     ax.legend()
     st.pyplot(fig)
     
-
 with col2 :
     st.markdown('### **Coulombic Efficiency**')
     ddd3 = dis_df[dis_df['battery_id'] == battery_id]
