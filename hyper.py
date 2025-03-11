@@ -93,12 +93,7 @@ with col4:
     fig = graphs2[battery_id]
     st.pyplot(fig)
 
-col_1, col_2 = st.columns(2)
-
-col_1.subheader('특성 중요도')
-
-with col_2 :
-    get_top_pca_features_expander(pca, features)
+st.subheader('특성 중요도')
 
 col1_4, col2_4 = st.columns(2, border=True)
 
@@ -107,3 +102,8 @@ with col1_4 :
 
 with col2_4 :
     st.image('img/hy_xg.png')
+
+_, col1_5 = st.columns(2)
+
+with col1_5 :
+    get_top_pca_features_expander(pca, features)

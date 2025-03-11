@@ -87,18 +87,21 @@ with col1 :
     st.pyplot(fig)
     
 with col2 :
-    st.markdown('### **Coulombic Efficiency**')
+    st.markdown('### **Cycle Performance & Coulombic Efficiency**')
+    st.write(' ')
+    st.write(' ')
     ddd3 = dis_df[dis_df['battery_id'] == battery_id]
-    fig, ax1 = plt.subplots(figsize = (8, 5))
+    fig, ax1 = plt.subplots(figsize = (11, 7))
     ax1.plot(ddd3['Cycle'], ddd3['Cal_Capacity'], color = 'lightseagreen', marker = 's', label = 'Capacity', alpha = 0.7)
     ax1.set_ylim([0,4])
-    ax1.set_ylabel('Capacity (Ah)', fontdict = {'color' : 'black', 'fontsize' : 12,})
-    ax1.set_xlabel('Cycle', fontsize = 12)
+    ax1.set_ylabel('Capacity (Ah)', fontdict = {'color' : 'black', 'fontsize' : 15,})
+    ax1.set_xlabel('Cycle', fontsize = 15)
 
     ax2 = ax1.twinx()
-    ax2.plot(ddd3['Cycle'], ddd3['CE'], color = 'lightpink', marker = 's', label = 'CE',)
+    ax2.plot(ddd3['Cycle'], ddd3['CE'], color = 'lightpink', marker = 's', label = 'CE')
     ax2.set_ylim([0,110])
-    ax2.set_ylabel('CE (%)', fontdict = {'color' : 'black', 'fontsize' : 12})
+    ax2.set_ylabel('CE (%)', fontdict = {'color' : 'black', 'fontsize' : 15})
+    fig.legend(loc=(0.08, 0.11), fontsize = 15)
     st.pyplot(fig)
 
 col3, col4 = st.columns(2, border=True)
