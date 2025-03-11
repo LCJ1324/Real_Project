@@ -51,7 +51,7 @@ def get_top_pca_features_expander(pca, features, top_n=3):
 
 battery_list = sorted(df['Battery'].unique())
 
-default_battery = 5
+default_battery = 18
 
 if "battery_id" not in st.session_state or st.session_state["battery_id"] not in battery_list:
     st.session_state["battery_id"] = default_battery

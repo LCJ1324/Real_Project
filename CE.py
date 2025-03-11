@@ -33,7 +33,7 @@ vol_df = pd.concat([vol1, vol2, vol3, vol4, vol5, vol6, vol7, vol8], ignore_inde
 
 battery_list = sorted(cal_df['battery_id'].unique())
 
-default_battery = 5
+default_battery = 18
 
 if "battery_id" not in st.session_state or st.session_state["battery_id"] not in battery_list:
     st.session_state["battery_id"] = default_battery
