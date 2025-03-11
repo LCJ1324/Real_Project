@@ -1,13 +1,11 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 import joblib
 import pickle
 
 backgroundColor = "#F0F0F0"
 st.set_page_config(layout="wide")
 
-# Streamlit 설정
 st.title("🤖 RUL 예측 머신러닝")
 st.text(' ')
 
@@ -18,7 +16,6 @@ def load_data(csv_path="excel/rerct.csv"):
 
 df = load_data()
 
-# 원본 특성 정의
 features = ['Temperature', 'Cutoff', 'Discharge_Current', 'Re', 'Rct', 'SOH', 'SOH_Diff']
 X = df[features]
 y = df['RUL']
@@ -37,16 +34,15 @@ with open("hyper_pkl/rf_graph.pkl", "rb") as f:
 with open("hyper_pkl/xgb_graph.pkl", "rb") as f:
     graphs2 = pickle.load(f)
 
-# PCA 주성분별 중요한 원래 특성 출력
 def get_top_pca_features_expander(pca, features, top_n=3):
     components = pd.DataFrame(pca.components_, columns=features, index=[f"PC{i+1}" for i in range(pca.n_components_)])
 
     with st.expander("**PCA 주성분별 주요 특성 보기**"): 
         
         for pc, row in components.iterrows():
-            top_features = row.abs().nlargest(top_n)  # 상위 n개 특성 선택 (절대값 기준)
+            top_features = row.abs().nlargest(top_n)
             top_feature_names = top_features.index.tolist()
-            top_feature_values = (top_features / top_features.sum() * 100).tolist()  # 비율 (%) 계산
+            top_feature_values = (top_features / top_features.sum() * 100).tolist()
 
             st.markdown(f"{pc}",)
             for name, value in zip(top_feature_names, top_feature_values):
@@ -67,11 +63,6 @@ battery_id = st.sidebar.selectbox(
 )
 
 st.session_state["battery_id"] = battery_id
-
-if battery_id == "전체":
-    filtered_df = df
-else:
-    filtered_df = df[df['Battery'] == battery_id]
 
 st.subheader("📊 모델 성능 평가")
 col1, col2 = st.columns(2)
