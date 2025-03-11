@@ -53,7 +53,7 @@ def get_top_pca_features_expander(pca, features, top_n=3):
                 st.write(f"- {name}: {value:.2f}%")
             st.divider()
 
-battery_list = sorted(df['Battery'].unique()) + ['전체']
+battery_list = sorted(df['Battery'].unique())
 
 default_battery = 5
 

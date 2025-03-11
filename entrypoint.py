@@ -1,7 +1,12 @@
 import streamlit as st
 
 if "battery_id" not in st.session_state:
-    st.session_state["battery_id"] = None 
+    st.session_state["battery_id"] = 5 
+
+if "slider_cycle" not in st.session_state:
+    st.session_state["slider_cycle"] = 1
+if "num_input_cycle" not in st.session_state:
+    st.session_state["num_input_cycle"] = 1
 
 # 1. 여러 페이지 정보를 등록합니다.
 pages = [

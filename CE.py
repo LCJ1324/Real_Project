@@ -18,11 +18,20 @@ def load_data2(xlsx_path):
 df = load_data('excel/rerct.csv')
 cal_df = load_data('excel/calculated.csv')
 dis_df = load_data('excel/calculated_dis.csv')
-vol_df = load_data('excel/Voltage_profile.csv')
 eis = load_data2('excel/EIS.xlsx')
 cv = load_data2("excel/CV test.xlsx")
+vol1 = load_data('excel/Vol_5.csv')
+vol2 = load_data('excel/Vol_6.csv')
+vol3 = load_data('excel/Vol_7.csv')
+vol4 = load_data('excel/Vol_18.csv')
+vol5 = load_data('excel/Vol_46.csv')
+vol6 = load_data('excel/Vol_47.csv')
+vol7 = load_data('excel/Vol_48.csv')
+vol8 = load_data('excel/Vol_55.csv')
 
-battery_list = sorted(cal_df['battery_id'].unique()) + ['전체']
+vol_df = pd.concat([vol1, vol2, vol3, vol4, vol5, vol6, vol7, vol8], ignore_index=True)
+
+battery_list = sorted(cal_df['battery_id'].unique())
 
 default_battery = 5
 
@@ -58,7 +67,6 @@ with st.sidebar:
             "# **Cycle**", 
             min_value=1, 
             max_value=max_cycle, 
-            value=st.session_state["slider_cycle"], 
             key="slider_cycle",
             on_change=update_number_input
         )
@@ -68,7 +76,6 @@ with st.sidebar:
             " ",
             min_value=1, 
             max_value=max_cycle, 
-            value=st.session_state["num_input_cycle"], 
             step=1,
             key="num_input_cycle",
             on_change=update_slider
@@ -90,7 +97,7 @@ else:
 
     col111, col222, col333, col444 = st.columns(4, border=True)
 
-    col111.metric('초기 용량 (Ah    )', f'{filtered_df['Capacity'].iloc[:10].max() : .2f}')
+    col111.metric('초기 용량 (Ah)', f'{filtered_df['Capacity'].iloc[:10].max() : .2f}')
     col222.metric("Temperature (°C)", f"{filtered_df['Temperature'].iloc[0]:.2f}")
     col333.metric("Cutoff Voltage (V)", f"{filtered_df['Cutoff'].iloc[0]:.2f}")
     col444.metric("Discharge Current (A)", f"{filtered_df['Discharge_Current'].iloc[0]:.2f}")
@@ -117,12 +124,12 @@ else:
         ax1.plot(ddd3['Cycle'], ddd3['Cal_Capacity'], color = 'lightseagreen', marker = 's', label = 'Capacity', alpha = 0.7)
         ax1.set_ylim([0,4])
         ax1.set_ylabel('Capacity (Ah)', fontdict = {'color' : 'black', 'fontsize' : 12,})
-        ax1.set_xlabel('사이클', fontsize = 12)
+        ax1.set_xlabel('Cycle', fontsize = 12)
 
         ax2 = ax1.twinx()
         ax2.plot(ddd3['Cycle'], ddd3['CE'], color = 'lightpink', marker = 's', label = 'CE',)
         ax2.set_ylim([0,110])
-        ax2.set_ylabel('쿨롱 효율 (%)', fontdict = {'color' : 'black', 'fontsize' : 12})
+        ax2.set_ylabel('CE (%)', fontdict = {'color' : 'black', 'fontsize' : 12})
         st.pyplot(fig)
     
     col3, col4 = st.columns(2, border=True)

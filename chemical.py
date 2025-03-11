@@ -23,7 +23,7 @@ def load_data2(csv_path):
 df = load_data()
 xrd_df = load_data2('excel/XRD.xlsx')
 
-battery_list = sorted(df['Battery'].unique()) + ['전체']
+battery_list = sorted(df['Battery'].unique())
 
 default_battery = 5
 
